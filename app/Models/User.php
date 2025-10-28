@@ -22,6 +22,13 @@ class User extends Authenticatable
         return $this->hasMany(Watchlist::class);
     }
 
+    public function movies()
+    {
+        return $this->belongsToMany(Movie::class, 'watchlists')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *
