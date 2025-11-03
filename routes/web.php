@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,5 +20,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/movies', [MovieController::class, 'index'])->name('movies.index');
+
+Route::middleware('auth')->group(function() {
+    Route::post('/movies/{movie}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
 
 require __DIR__ . '/auth.php';
