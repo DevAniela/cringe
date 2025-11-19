@@ -12,4 +12,9 @@ class MovieController extends Controller
 
         return view('movies.index', compact('movies'));
     }
+
+    public function create()
+    {
+        return view('movies.create');
+    }
 }
