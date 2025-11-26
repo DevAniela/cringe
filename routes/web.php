@@ -25,6 +25,9 @@ Route::get('/dashboard', function () {
     Route::post('/movies', [MovieController::class, 'store'])->name('movies.store');
     
     Route::post('/movies/{movie}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+
+    Route::get('/movies/{movie}/edit', [MovieController::class, 'edit'])->name('movies.edit');
+    Route::patch('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
     
 });
 
