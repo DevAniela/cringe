@@ -27,8 +27,10 @@ Route::get('/dashboard', function () {
     Route::post('/movies/{movie}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
 
     Route::get('/movies/{movie}/edit', [MovieController::class, 'edit'])->name('movies.edit');
-    Route::patch('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
     
+    Route::patch('/movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
+
+    Route::delete('/movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
 });
 
 require __DIR__ . '/auth.php';

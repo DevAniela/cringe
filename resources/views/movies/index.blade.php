@@ -14,8 +14,28 @@
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         @foreach($movies as $movie)
         <div class="bg-white shadow rounded-2xl p-4">
-            <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" class="rounded-xl mb-3 w-full h-64 object-cover">
+
             <h2 class="text-xl font-semibold">{{ $movie->title }}</h2>
+
+            @auth
+                @if($movie->user_id == Auth::id())
+                <div class="mt-3 flex justify-end space-x-2">
+                    <a href="{{ route('movies.edit', $movie) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white text-xs px-2 py-1 rounded">
+                       Edit
+                    </a>
+
+                <form action="{{ route('movies.destroy', $movie) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1 rounded" onclick="return confirm('Are you sure you want to delete the movie {{ $movie->title }}?');">
+                        Delete
+                    </button>
+                </form>
+            </div>
+            @endif
+            @endauth
+            
+            <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" class="rounded-xl mb-3 w-full h-64 object-cover">
             <p class="text-gray-500 text-sm mb-2">{{ $movie->release_year }} • {{ $movie->category->name ?? 'No category' }}</p>
             <p class="text-gray-700 text-sm mb-2">
                 Average Cringe:

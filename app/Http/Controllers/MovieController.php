@@ -60,5 +60,13 @@ class MovieController extends Controller
         $movie->update($validated);
         return redirect()->route('movies.index')->with('success', 'Movie updated successfully!');
     }
-
+    public function destroy(Movie $movie)
+    {
+        if($movie->user_id !== Auth::id())
+        {
+            abort(403, 'Unauthorized action.');
+        }
+        $movie->delete();
+        return redirect()->route('movies.index')->with('success', 'Movie deleted successfully!');
+    }
 }
