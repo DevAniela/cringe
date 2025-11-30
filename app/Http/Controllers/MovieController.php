@@ -46,6 +46,7 @@ class MovieController extends Controller
     }
 
     public function update(Request $request, Movie $movie) {
+        $this->authorize('update', $movie);
         $validated = $request->validate([
             'title' => [
                 'required',
@@ -62,10 +63,7 @@ class MovieController extends Controller
     }
     public function destroy(Movie $movie)
     {
-        if($movie->user_id !== Auth::id())
-        {
-            abort(403, 'Unauthorized action.');
-        }
+        $this->authorize('delete', $movie);
         $movie->delete();
         return redirect()->route('movies.index')->with('success', 'Movie deleted successfully!');
     }
